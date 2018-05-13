@@ -99,7 +99,7 @@ public class CmdSender {
 
             @Override
             public void onFailure(Throwable ex) {
-             System.out.println("msg send failed: ");
+             System.out.println("msg send failed: " + ex.getLocalizedMessage());
             }
 
         });

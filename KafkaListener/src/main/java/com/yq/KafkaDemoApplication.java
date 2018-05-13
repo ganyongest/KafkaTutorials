@@ -14,9 +14,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class KafkaDemoApplication {
     private static final Logger logger = LoggerFactory.getLogger(KafkaDemoApplication.class);
     public static void main(String[] args) {
-
         ConfigurableApplicationContext context = SpringApplication.run(KafkaDemoApplication.class, args);
         logger.info("Done start Spring boot");
-
     }
 }
