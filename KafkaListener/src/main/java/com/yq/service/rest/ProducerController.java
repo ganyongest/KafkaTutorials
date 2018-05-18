@@ -37,12 +37,12 @@ public class ProducerController {
 
     @ApiOperation(value = "send")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "topic", value = "topic", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "topic", value = "iiot.prod", required = true, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "content", value = "content", required = true, dataType = "string", paramType = "query")
     })
     @PostMapping(value = "/send", produces = "application/json;charset=UTF-8")
     public String sendMsg(@RequestParam  String topic, @RequestParam String content) {
-        logger.info("enter sendMsg, topico={}, conent={}", topic, content);
+        logger.info("enter sendMsg, topic={}, conent={}", topic, content);
         producerService.send(topic, content, 1);
 
         JSONObject jsonObj = new JSONObject();
@@ -52,7 +52,7 @@ public class ProducerController {
 
     @ApiOperation(value = "devMsg")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "topic", value = "topic", defaultValue = "topic", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "topic", value = "topic", defaultValue = "topic1", required = true, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "count", value = "发送多少遍", defaultValue = "1", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "deviceId", value = "deviceId", defaultValue = "86b874260d224cf8870bef1df60bcfff",  required = true, dataType = "string", paramType = "query")
     })
@@ -60,13 +60,13 @@ public class ProducerController {
     public String createDeviceMsg(@RequestParam  String topic,  @RequestParam int count, @RequestParam String deviceId) {
         producerService.send(topic, deviceId, count);
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("curentTime", LocalDateTime.now().toString());
+        jsonObj.put("currentTime", LocalDateTime.now().toString());
         return jsonObj.toJSONString();
     }
 
     @ApiOperation(value = "devJsonMsg")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "topic", value = "topic", defaultValue = "topic02", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "topic", value = "topic", defaultValue = "iiot.prod", required = true, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "count", value = "发送多少遍", defaultValue = "1", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "jsonStr", value = "jsonStr", defaultValue = "jsonStr",  required = true, dataType = "DeviceMessage", paramType = "body")
     })
@@ -75,7 +75,7 @@ public class ProducerController {
         //String jsonStr = JSON.toJSONString(json);
         producerService.sendJson(topic, jsonStr, count);
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("curentTime", LocalDateTime.now().toString());
+        jsonObj.put("currentTime", LocalDateTime.now().toString());
         return jsonObj.toJSONString();
     }
 

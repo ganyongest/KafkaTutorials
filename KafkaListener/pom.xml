@@ -42,7 +42,7 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
-            <version>1.1.8.RELEASE</version>
+            <version>1.3.5.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -51,10 +51,11 @@
             <version>2.8.2</version>
         </dependency>
 
+        <!--  spring-kafka needs higher client-->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
-            <version>0.10.1.1</version>
+            <version>0.11.0.2</version>
         </dependency>
 
         <dependency>
@@ -79,6 +80,13 @@
             <artifactId>fastjson</artifactId>
             <version>1.1.33</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.5</version>
+        </dependency>
+
     </dependencies>
 
     <build>
