@@ -51,10 +51,10 @@ public class ProducerController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "topic02", value = "topic02", defaultValue = "topic02", required = true, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "count", value = "发送多少遍", defaultValue = "1", required = true, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "deviceId", value = "deviceId", defaultValue = "86b874260d224cf8870bef1df60bcfff",  required = true, dataType = "string", paramType = "query")
+            @ApiImplicitParam(name = "deviceId", value = "deviceId", defaultValue = "0bcfff",  required = true, dataType = "string", paramType = "query")
     })
     @PostMapping(value = "/devMsg", produces = "application/json;charset=UTF-8")
-    public String createDeviceMsg(@RequestParam  String topic,  @RequestParam int count, @RequestParam String deviceId) {
+    public String createDeviceMsg(@RequestParam  String topic, @RequestParam int count, @RequestParam String deviceId) {
         producerService.send(topic, deviceId, count);
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("currentTime", LocalDateTime.now().toString());
@@ -76,8 +76,8 @@ public class ProducerController {
     }
 
     /*
-    词方法是指为了让DeviceMessage能在swagger中正常显示
-     */
+词方法是指为了让DeviceMessage能在swagger中正常显示
+ */
     @ApiOperation(value = "notUsed")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "topic", value = "topic", defaultValue = "topic02", required = true, dataType = "string", paramType = "query"),
