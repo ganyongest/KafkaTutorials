@@ -1,7 +1,6 @@
 package com.yq.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yq.domain.DeviceMessage;
 import com.yq.producer.ProducerService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -49,7 +48,7 @@ public class ProducerController {
 
     @ApiOperation(value = "devMsg")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "topic02", value = "topic02", defaultValue = "topic02", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "topic", value = "topic02", defaultValue = "topic02", required = true, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "count", value = "发送多少遍", defaultValue = "1", required = true, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "deviceId", value = "deviceId", defaultValue = "0bcfff",  required = true, dataType = "string", paramType = "query")
     })
@@ -73,20 +72,5 @@ public class ProducerController {
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("currentTime", LocalDateTime.now().toString());
         return jsonObj.toJSONString();
-    }
-
-    /*
-词方法是指为了让DeviceMessage能在swagger中正常显示
- */
-    @ApiOperation(value = "notUsed")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "topic", value = "topic", defaultValue = "topic02", required = true, dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "json", value = "deviceId", defaultValue = "",  required = true, dataType = "DeviceMessage", paramType = "body")
-    })
-    @PostMapping(value = "/notUsed", produces = "application/json;charset=UTF-8")
-    public String notUsed(@RequestParam  String topic, @RequestBody DeviceMessage msg) {
-        JSONObject json = new JSONObject();
-        json.put("result", "not used method");
-        return json.toString();
     }
 }
