@@ -50,21 +50,23 @@ public class ReceiveMessageMain {
 //            }
 
             Properties props = new Properties();
-            props.put("bootstrap.servers", "192.168.119.131:9092");
+            props.put("bootstrap.servers", "10.76.3.68:9092");
+            //props.put("bootstrap.servers", "192.168.119.131:9092");
             //props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "ubuntu:9092");
             props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
             props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
-            props.put(ConsumerConfig.GROUP_ID_CONFIG, "test-group");
+            props.put(ConsumerConfig.GROUP_ID_CONFIG, "mongo-consumer");
             props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
             props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
             props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "300000");
+            props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "latest");
 
 
-            props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_PLAINTEXT");
-            props.put(SaslConfigs.SASL_MECHANISM, "PLAIN");
-            props.put("sasl.jaas.config",
-                    "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"producer\" password=\"prod-sec\";");
+//            props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_PLAINTEXT");
+//            props.put(SaslConfigs.SASL_MECHANISM, "PLAIN");
+//            props.put("sasl.jaas.config",
+//                    "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"producer\" password=\"prod-sec\";");
 
             //sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="(username)" password="(password)";
             //System.setProperty("java.security.auth.login.config", "D:\\E\\workspaceGitub\\kafka_client_jaas.conf"); //配置文件路径
@@ -76,7 +78,7 @@ public class ReceiveMessageMain {
 
             System.out.println("receive data");
             KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-            consumer.subscribe(Arrays.asList("topic01"));
+            consumer.subscribe(Arrays.asList("lizhenjun"));
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(100);
                 System.out.println("receive data01");

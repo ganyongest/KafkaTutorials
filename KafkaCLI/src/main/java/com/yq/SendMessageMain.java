@@ -58,7 +58,7 @@ public class SendMessageMain {
 //            }
 
             Properties props = new Properties();
-            //props.put("bootstrap.servers", "192.168.119.131:9092");
+            props.put("bootstrap.servers", "10.76.3.68:9092");
             props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "ubuntu:9092");
             props.put("acks", "all");
             props.put("retries", 0);
@@ -68,15 +68,14 @@ public class SendMessageMain {
             props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
             props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-
-            props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_PLAINTEXT");
-            props.put(SaslConfigs.SASL_MECHANISM, "PLAIN");
+//            props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_PLAINTEXT");
+//            props.put(SaslConfigs.SASL_MECHANISM, "PLAIN");
             String username = "producer";
             String password = "prod-sec";
             String jaasConfig = "org.apache.kafka.common.security.plain.PlainLoginModule required username=\""+ username +"\" password=\"" + password + "\";";
 //            props.put("sasl.jaas.config",
 //                    "org.apache.kafka.common.security.plain.PlainLoginModule required username=\"producer\" password=\"prod-sec\";");
-            props.put("sasl.jaas.config", jaasConfig);
+//            props.put("sasl.jaas.config", jaasConfig);
 
 
             //sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="(username)" password="(password)";
@@ -91,7 +90,7 @@ public class SendMessageMain {
 
             System.out.println("send data");
 
-            ProducerRecord<String, String> producerRecord = new ProducerRecord("topic01", data);
+            ProducerRecord<String, String> producerRecord = new ProducerRecord("lizhenjun", data);
             //Future<RecordMetadata> future = producer.send(producerRecord);
 
             for (int i = 0; i < 100; i++) {
@@ -115,16 +114,11 @@ public class SendMessageMain {
 
             System.out.println("close producer");
             producer.close();
-
-            AppConfigurationEntry acifg;
         }
         catch (Exception ex) {
             ex.printStackTrace();
             System.out.println("when calling kafka output error." + ex.getMessage());
         }
     }
-
-
-
 
 }

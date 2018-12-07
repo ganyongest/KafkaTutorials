@@ -6,6 +6,7 @@ import com.yq.service.ProducerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -16,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,12 +46,40 @@ public class ProducerController {
             @ApiImplicitParam(name = "content", value = "content", required = true, dataType = "string", paramType = "query")
     })
     @PostMapping(value = "/send", produces = "application/json;charset=UTF-8")
-    public String sendMsg(@RequestParam  String topic, @RequestParam String content) {
-        logger.info("enter sendMsg, topic={}, conent={}", topic, content);
+    public String sendMsg(@RequestParam  String topic, @RequestParam String content, HttpServletResponse response) throws IOException {
+        logger.info("enter sendMsg, topic={}, content={}", topic, content);
         producerService.send(topic, content, 1);
 
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("curentTime", LocalDateTime.now().toString());
+        jsonObj.put("currentTime", LocalDateTime.now().toString());
+
+        Cookie cookie1 = new Cookie("fullname", URLEncoder.encode("yangqian", "UTF-8"));
+        Cookie cookie2 = new Cookie("iotSecret", "iotsecrect");
+
+
+        response.addCookie(cookie1);
+        response.addCookie(cookie2);
+
+        return jsonObj.toJSONString();
+    }
+
+    @ApiOperation(value = "get")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "topic", value = "iiot.prod", required = true, dataType = "string", paramType = "query")
+    })
+    @GetMapping(value = "/send", produces = "application/json;charset=UTF-8")
+    public String sendMsg(@RequestParam  String topic, HttpServletResponse response) throws IOException {
+
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("currentTime", LocalDateTime.now().toString());
+
+        Cookie cookie1 = new Cookie("fullname", URLEncoder.encode("yangqian", "UTF-8"));
+        Cookie cookie2 = new Cookie("iotSecret", "iotsecrect");
+
+
+        response.addCookie(cookie1);
+        response.addCookie(cookie2);
+
         return jsonObj.toJSONString();
     }
 
@@ -89,5 +122,19 @@ public class ProducerController {
         JSONObject json = new JSONObject();
         json.put("result", "not used method");
         return json.toString();
+    }
+
+    @ApiOperation(value = "hello")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "message", value = "hello", required = true, dataType = "string", paramType = "query")
+    })
+    @GetMapping(value = "/hello", produces = "application/json;charset=UTF-8")
+    public String helloMsg(@RequestParam  String message) {
+        logger.info("enter sendMsg, message={}", message);
+
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("currentTime", LocalDateTime.now().toString());
+        jsonObj.put("message", message);
+        return jsonObj.toJSONString();
     }
 }

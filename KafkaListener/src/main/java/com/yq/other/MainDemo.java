@@ -25,5 +25,8 @@ public class MainDemo {
         Date now = new Date();
         String str = format.format(now);
         System.out.println("now time is " + str);
+
+        long nowLong = System.currentTimeMillis();
+        System.out.println("now time is " + nowLong);
     }
 }

@@ -51,11 +51,12 @@
             <version>2.8.2</version>
         </dependency>
 
-        <!--  spring-kafka needs higher client-->
+        <!--  spring-kafka needs higher client  spring-kafka自动会添加client的版本-->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
             <version>0.11.0.2</version>
+            <!--<version>0.10.1.1</version>-->
         </dependency>
 
         <dependency>
