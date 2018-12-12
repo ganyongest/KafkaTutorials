@@ -58,7 +58,7 @@ public class SendMessageMain {
 //            }
 
             Properties props = new Properties();
-            props.put("bootstrap.servers", "10.76.3.68:9092");
+            props.put("bootstrap.servers", "yamgqian-PC:9092");
             props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "ubuntu:9092");
             props.put("acks", "all");
             props.put("retries", 0);

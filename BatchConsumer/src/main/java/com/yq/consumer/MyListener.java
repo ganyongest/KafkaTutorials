@@ -25,7 +25,6 @@ public class MyListener {
 
     @KafkaListener(id = "id0", topicPartitions = { @TopicPartition(topic = TPOIC, partitions = { "0" }) })
     public void listenPartition0(List<ConsumerRecord<?, ?>> records) {
-    //public void listenPartition0(ConsumerRecord<?, ?> record) {
         log.info("Id0 Listener, Thread ID: " + Thread.currentThread().getId());
         log.info("Id0 records size " +  records.size());
 
