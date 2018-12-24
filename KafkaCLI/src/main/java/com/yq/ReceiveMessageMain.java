@@ -55,12 +55,12 @@ public class ReceiveMessageMain {
 
         Properties props = new Properties();
         props.put("bootstrap.servers", "yamgqian-PC:9092");
-        //props.put("bootstrap.servers", "192.168.119.131:9092");
+
         //props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "ubuntu:9092");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, "yq-consumer01");
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, "yq-consumer03");
         //props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
         props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
         props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "300000");
@@ -83,25 +83,31 @@ public class ReceiveMessageMain {
         System.out.println("receive data");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
         try {
-            String topic = "yqtopic01";
+            String topic = "abc";
             consumer.subscribe(Arrays.asList(topic));
+
             while (true) {
                 ConsumerRecords<String, String> records = consumer.poll(100);
-                for (ConsumerRecord<String, String> record : records) {
-                    System.out.printf("offset = %d, key= %s , value = %s\n",
-                            record.offset(), record.key(), record.value());
-                }
+//                for (ConsumerRecord<String, String> record : records) {
+//                    System.out.printf("offset = %d, key= %s , value = %s\n",
+//                            record.offset(), record.key(), record.value());
+//                }
                 for (TopicPartition partition : records.partitions()) {
+                    long position = consumer.position(partition);
+
+                    System.out.println("partitionId=" + partition.partition()+ " , position=" + position);
                     List<ConsumerRecord<String, String>> partitionRecords = records.records(partition);
 
+
                     for (ConsumerRecord<String, String> record : partitionRecords) {
-                        log.info("offset={}, value={}", record.offset(), record.value());
+                       // System.out.println("offset=" + record.offset()+ " , value=" + record.value());
+
+
                     }
                     long lastOffset = partitionRecords.get(partitionRecords.size() - 1).offset();
                     consumer.commitSync(Collections.singletonMap(partition, new OffsetAndMetadata(lastOffset - 1)));
 
                 }
-
             }
         } catch (Exception ex) {
             ex.printStackTrace();
